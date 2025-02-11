@@ -3,88 +3,214 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rock Paper Scissors</title>
+    <title>Restaurant Menu</title>
     <style>
+        /* Background image and general page styles */
         body {
             font-family: Arial, sans-serif;
+            background-image: url('https://www.w3schools.com/w3images/food.jpg'); /* You can change this URL to another image */
+            background-size: cover;
+            background-position: center;
+            margin: 0;
+            padding: 0;
+            color: white;
+        }
+
+        header {
+            background-color: rgba(0, 0, 0, 0.7);
+            color: white;
             text-align: center;
-            padding-top: 50px;
+            padding: 20px 0;
         }
-        .choices button {
-            font-size: 20px;
-            padding: 10px 20px;
-            margin: 10px;
+        header h1 {
+            margin: 0;
+            font-size: 3em;
+        }
+        header p {
+            font-size: 1.2em;
+        }
+
+        .menu-container {
+            display: flex;
+            justify-content: space-around;
+            padding: 20px;
+            flex-wrap: wrap;
+        }
+        .menu-section {
+            background-color: rgba(255, 255, 255, 0.8);
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            width: 30%;
+            margin: 15px;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        .menu-section h2 {
+            text-align: center;
+            color: #343a40;
+        }
+        .menu-item {
+            display: flex;
+            justify-content: space-between;
+            margin: 10px 0;
+            align-items: center;
+        }
+        .menu-item button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 8px 16px;
             cursor: pointer;
+            border-radius: 5px;
+            font-size: 14px;
         }
-        .result {
-            font-size: 24px;
+        .menu-item button:hover {
+            background-color: #0056b3;
+        }
+
+        .order-summary {
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 15px;
             margin-top: 20px;
+            border-radius: 8px;
+            width: 50%;
+            margin: 20px auto;
+            display: none;
+        }
+        .order-summary h3 {
+            text-align: center;
+            color: #343a40;
+        }
+        .order-summary ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        .order-summary li {
+            padding: 5px 0;
+            color: #343a40;
+        }
+        .order-summary .total {
+            font-weight: bold;
+            margin-top: 10px;
         }
     </style>
 </head>
 <body>
-    <h1>Rock Paper Scissors Game</h1>
-    <div class="choices">
-        <button id="rock">Rock</button>
-        <button id="paper">Paper</button>
-        <button id="scissors">Scissors</button>
+
+    <header>
+        <h1>Restaurant Menu</h1>
+        <p>Delicious food and drinks just for you!</p>
+    </header>
+
+    <div class="menu-container">
+        <div class="menu-section" id="starters">
+            <h2>Starters</h2>
+            <div class="menu-item">
+                <span>Spring Rolls - $5.00</span>
+                <button onclick="addToOrder('Spring Rolls', 5)">Add to Order</button>
+            </div>
+            <div class="menu-item">
+                <span>Bruschetta - $6.00</span>
+                <button onclick="addToOrder('Bruschetta', 6)">Add to Order</button>
+            </div>
+            <div class="menu-item">
+                <span>Garlic Bread - $4.00</span>
+                <button onclick="addToOrder('Garlic Bread', 4)">Add to Order</button>
+            </div>
+        </div>
+
+        <div class="menu-section" id="meals">
+            <h2>Main Meals</h2>
+            <div class="menu-item">
+                <span>Grilled Chicken - $12.00</span>
+                <button onclick="addToOrder('Grilled Chicken', 12)">Add to Order</button>
+            </div>
+            <div class="menu-item">
+                <span>Vegetable Pasta - $10.00</span>
+                <button onclick="addToOrder('Vegetable Pasta', 10)">Add to Order</button>
+            </div>
+            <div class="menu-item">
+                <span>Steak - $18.00</span>
+                <button onclick="addToOrder('Steak', 18)">Add to Order</button>
+            </div>
+        </div>
+
+        <div class="menu-section" id="drinks">
+            <h2>Drinks</h2>
+            <div class="menu-item">
+                <span>Coke - $2.00</span>
+                <button onclick="addToOrder('Coke', 2)">Add to Order</button>
+            </div>
+            <div class="menu-item">
+                <span>Orange Juice - $3.00</span>
+                <button onclick="addToOrder('Orange Juice', 3)">Add to Order</button>
+            </div>
+            <div class="menu-item">
+                <span>Water - $1.00</span>
+                <button onclick="addToOrder('Water', 1)">Add to Order</button>
+            </div>
+        </div>
+
+        <div class="menu-section" id="desserts">
+            <h2>Desserts</h2>
+            <div class="menu-item">
+                <span>Chocolate Cake - $5.00</span>
+                <button onclick="addToOrder('Chocolate Cake', 5)">Add to Order</button>
+            </div>
+            <div class="menu-item">
+                <span>Ice Cream - $4.00</span>
+                <button onclick="addToOrder('Ice Cream', 4)">Add to Order</button>
+            </div>
+            <div class="menu-item">
+                <span>Fruit Salad - $6.00</span>
+                <button onclick="addToOrder('Fruit Salad', 6)">Add to Order</button>
+            </div>
+        </div>
     </div>
-    <div class="result">
-        <p id="resultMessage"></p>
-        <p id="score">Your Score: 0 | Computer's Score: 0</p>
+
+    <div class="order-summary" id="orderSummary">
+        <h3>Order Summary</h3>
+        <ul id="orderList">
+            <!-- Dynamically populated order items will go here -->
+        </ul>
+        <div class="total" id="totalPrice">Total: $0.00</div>
     </div>
 
     <script>
-        let userScore = 0;
-        let computerScore = 0;
+        let order = [];
+        let totalPrice = 0;
 
-        // Choices
-        const choices = ['rock', 'paper', 'scissors'];
+        function addToOrder(itemName, price) {
+            // Add item to order array
+            order.push({ name: itemName, price: price });
+            totalPrice += price;
 
-        // Buttons
-        const rockButton = document.getElementById('rock');
-        const paperButton = document.getElementById('paper');
-        const scissorsButton = document.getElementById('scissors');
-
-        // Result elements
-        const resultMessage = document.getElementById('resultMessage');
-        const scoreDisplay = document.getElementById('score');
-
-        // Function to get computer's choice
-        function computerChoice() {
-            const randomIndex = Math.floor(Math.random() * 3);
-            return choices[randomIndex];
+            // Update order list display
+            updateOrderSummary();
         }
 
-        // Function to determine winner
-        function determineWinner(userChoice, compChoice) {
-            if (userChoice === compChoice) {
-                return 'It\'s a tie!';
-            } else if (
-                (userChoice === 'rock' && compChoice === 'scissors') ||
-                (userChoice === 'paper' && compChoice === 'rock') ||
-                (userChoice === 'scissors' && compChoice === 'paper')
-            ) {
-                userScore++;
-                return 'You win!';
-            } else {
-                computerScore++;
-                return 'Computer wins!';
-            }
-        }
+        function updateOrderSummary() {
+            const orderList = document.getElementById('orderList');
+            const totalDisplay = document.getElementById('totalPrice');
+            const orderSummary = document.getElementById('orderSummary');
 
-        // Function to update the game
-        function playGame(userChoice) {
-            const compChoice = computerChoice();
-            const result = determineWinner(userChoice, compChoice);
-            resultMessage.textContent = You chose ${userChoice}. Computer chose ${compChoice}. ${result};
-            scoreDisplay.textContent = Your Score: ${userScore} | Computer's Score: ${computerScore};
-        }
+            // Clear the current list
+            orderList.innerHTML = '';
 
-        // Event listeners for buttons
-        rockButton.addEventListener('click', () => playGame('rock'));
-        paperButton.addEventListener('click', () => playGame('paper'));
-        scissorsButton.addEventListener('click', () => playGame('scissors'));
+            // Add each item to the order list
+            order.forEach(item => {
+                const listItem = document.createElement('li');
+                listItem.textContent = `${item.name} - $${item.price.toFixed(2)}`;
+                orderList.appendChild(listItem);
+            });
+
+            // Display total price
+            totalDisplay.textContent = `Total: $${totalPrice.toFixed(2)}`;
+
+            // Show the order summary
+            orderSummary.style.display = 'block';
+        }
     </script>
+
 </body>
 </html>
